@@ -195,7 +195,7 @@ void axp192_chgen(bool on)
 
 void axp192_chg_set_target_vol(axp192_chg_vol_t vol)
 {
-  uint8_t value;
+  uint8_t value = 0x00;
   switch(vol) {
   case AXP192_VOL_4_1:
     value = 0x00;
@@ -216,7 +216,7 @@ void axp192_chg_set_target_vol(axp192_chg_vol_t vol)
 
 void axp192_chg_set_end_current(axp192_chg_end_cur_t cur)
 {
-  uint8_t value;
+  uint8_t value = 0x00;
   switch(cur) {
   case AXP192_CHG_END_CUR_10PER:
     value = 0x00;
@@ -231,7 +231,7 @@ void axp192_chg_set_end_current(axp192_chg_end_cur_t cur)
 
 void axp192_chg_set_current(axp192_chg_cur_t cur)
 {
-  uint8_t value;
+  uint8_t value = 0x00;
   switch(cur) {
   case AXP192_CHG_CUR_100:
     value = 0x00;
