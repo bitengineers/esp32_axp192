@@ -14,6 +14,9 @@
 #define AXP192_SDA      21
 #define AXP192_SCL      22
 
+#define AXP192_REG_POWER_OUTPUT   0x12
+#define AXP192_REG_CHG_CONTROL    0x33
+
 static uint8_t status[0];
 static void axp192_i2c_write(uint8_t reg, uint8_t value);
 static void axp192_i2c_read(uint8_t reg, uint8_t *value);
