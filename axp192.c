@@ -260,3 +260,42 @@ void axp192_chg_set_current(axp192_chg_cur_t cur)
   }
   _axp192_reg_update(AXP192_REG_CHG_CONTROL, value, 0x07);
 }
+
+// 0x78 0x79 Battery voltage
+uint16_t axp192_get_battery_vol(void)
+{
+  uint8_t v;
+  uint16_t rtn = 0x0000;
+  axp192_i2c_read(0x78, &v);
+  rtn = v << 4;
+  v = 0x00;
+  axp192_i2c_read(0x79, &v);
+  rtn |= v;
+  return rtn;
+}
+
+// 0x7a 7b Battery charge current
+uint16_t axp192_get_battery_charge_current(void)
+{
+  uint8_t v;
+  uint16_t rtn = 0x0000;
+  axp192_i2c_read(0x7a, &v);
+  rtn = (v << 5);
+  v = 0x00;
+  axp192_i2c_read(0x7b, &v);
+  rtn |= v;
+  return rtn;
+}
+
+// 0x7c 7d Battery discharge current
+uint16_t axp192_get_battery_discharge_current(void)
+{
+  uint8_t v;
+  uint16_t rtn = 0x0000;
+  axp192_i2c_read(0x7c, &v);
+  rtn = (v << 5);
+  v = 0x00;
+  axp192_i2c_read(0x7d, &v);
+  rtn |= v;
+  return rtn;
+}
