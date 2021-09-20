@@ -63,11 +63,11 @@ extern "C" {
   void axp192_chg_set_current(axp192_chg_cur_t cur);
 
   // 0x78 0x79 Battery voltage
-  uint16_t axp192_get_battery_vol(void);
+  uint16_t axp192_batt_get_vol(void);
   // 0x7a 7b Battery charge current
-  uint16_t axp192_get_battery_charge_current(void);
+  uint16_t axp192_batt_get_chrg_current(void);
   // 0x7c 7d Battery discharge current
-  uint16_t axp192_get_battery_discharge_current(void);
+  uint16_t axp192_batt_get_dischrg_current(void);
 
 #ifdef __cplusplus
 }
