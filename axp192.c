@@ -20,6 +20,8 @@
 #define AXP192_REG_ADC_ENABLE1      0x82
 #define AXP192_REG_ADC_ENABLE2      0x83
 #define AXP192_REG_ADC_SAMPLERATE   0x84
+#define AXP192_REG_GPIO1_FUNC       0x92
+#define AXP192_REG_GPIO2_FUNC       0x93
 
 static uint8_t status[0];
 static void axp192_i2c_write(uint8_t reg, uint8_t value);
@@ -521,4 +523,62 @@ void axp192_ts_output_en(axp192_ts_out_mode_t mode)
     return;
   }
   _axp192_reg_update(AXP192_REG_ADC_SAMPLERATE, v, 0x03);
+}
+
+// 0x92 GPIO1
+
+void axp192_gpio1_change(axp192_gpio_func_t func)
+{
+  uint8_t v;
+  switch(func) {
+  case AXP192_GPIO_OUTPUT:
+    v = 0x00;
+    break;
+  case AXP192_GPIO_INPUT:
+    v = 0x01;
+    break;
+  case AXP192_GPIO_OUTPUT_PWM:
+    v = 0x02;
+    break;
+  case AXP192_GPIO_INPUT_ADC:
+    v = 0x04;
+    break;
+  case AXP192_GPIO_OUTPUT_LOW:
+    v = 0x05;
+    break;
+  case AXP192_GPIO_FLOATING:
+  default:
+    v = 0x07;
+    break;
+  }
+  _axp192_reg_update(AXP192_REG_GPIO1_FUNC, v, 0x07);
+}
+
+// 0x93 GPIO2
+
+void axp192_gpio2_change(axp192_gpio_func_t func)
+{
+  uint8_t v;
+  switch(func) {
+  case AXP192_GPIO_OUTPUT:
+    v = 0x00;
+    break;
+  case AXP192_GPIO_INPUT:
+    v = 0x01;
+    break;
+  case AXP192_GPIO_OUTPUT_PWM:
+    v = 0x02;
+    break;
+  case AXP192_GPIO_INPUT_ADC:
+    v = 0x04;
+    break;
+  case AXP192_GPIO_OUTPUT_LOW:
+    v = 0x05;
+    break;
+  case AXP192_GPIO_FLOATING:
+  default:
+    v = 0x07;
+    break;
+  }
+  _axp192_reg_update(AXP192_REG_GPIO2_FUNC, v, 0x07);
 }
