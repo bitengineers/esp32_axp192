@@ -82,7 +82,7 @@ static void axp192_i2c_read(uint8_t reg, uint8_t *value)
   i2c_master_write_byte(cmd, reg, true);
   i2c_master_start(cmd);
   i2c_master_write_byte(cmd, AXP192_I2C_ADDR | I2C_MASTER_READ, true);
-  i2c_master_read_byte(cmd, value, I2C_MASTER_LAST_NACK);
+  i2c_master_read_byte(cmd, value, I2C_MASTER_NACK);
   i2c_master_stop(cmd);
   i2c_master_cmd_begin(AXP192_I2C, cmd, pdMS_TO_TICKS(10));
   i2c_cmd_link_delete(cmd);
