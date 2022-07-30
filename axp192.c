@@ -1,19 +1,24 @@
 #include <stdint.h>
 
+#include "sdkconfig.h"
+
 #include "freertos/FreeRTOS.h"
 #include "driver/i2c.h"
 #include "esp_err.h"
 #include "esp_log.h"
 
 #include "axp192.h"
+#include "m5device.h"
 
 #define TAG             "AXP192"
-#define AXP192_I2C      I2C_NUM_0
-#define AXP192_I2C_ADDR 0x68
-#define AXP192_I2C_CLK  400000
-#define AXP192_SDA      21
-#define AXP192_SCL      22
 
+#if CONFIG_M5STICKC_PLUS_I2C_NUM_0
+#define AXP192_I2C      I2C_NUM_0
+#elif CONFIG_M5STICKC_PLUS_I2C_NUM_1
+#define AXP192_I2C      I2C_NUM_1
+#endif // CONFIG_M5STICKC_PLUS_I2C_NUM
+
+#define AXP192_I2C_ADDR             0x68
 #define AXP192_REG_POWER_OUTPUT     0x12
 #define AXP192_REG_CHG_CONTROL1     0x33
 #define AXP192_REG_CHG_CONTROL2     0x34
@@ -32,16 +37,6 @@ static void _axp192_reg_toggle(uint8_t reg, bool on, uint8_t bit);
 
 void axp192_init(void)
 {
-  i2c_config_t i2c_config = {
-    .mode = I2C_MODE_MASTER,
-    .sda_io_num = AXP192_SDA,
-    .scl_io_num = AXP192_SCL,
-    .sda_pullup_en = GPIO_PULLUP_ENABLE,
-    .scl_pullup_en = GPIO_PULLUP_ENABLE,
-    .master.clk_speed = AXP192_I2C_CLK
-  };
-  ESP_ERROR_CHECK(i2c_param_config(AXP192_I2C, &i2c_config));
-  ESP_ERROR_CHECK(i2c_driver_install(AXP192_I2C, I2C_MODE_MASTER, 0, 0, 0));
   axp192_read_status();
   if (axp192_has_bat()) {
     ESP_LOGI(TAG, "has battery");
@@ -59,7 +54,7 @@ void axp192_init(void)
 
 void axp192_deinit(void)
 {
-  ESP_ERROR_CHECK(i2c_driver_delete(AXP192_I2C));
+  status[0] = 0x00;
 }
 
 static void axp192_i2c_write(uint8_t reg, uint8_t value)
