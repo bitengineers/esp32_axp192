@@ -12,11 +12,7 @@
 
 #define TAG             "AXP192"
 
-#if CONFIG_M5STICKC_PLUS_I2C_NUM_0
 #define AXP192_I2C      I2C_NUM_0
-#elif CONFIG_M5STICKC_PLUS_I2C_NUM_1
-#define AXP192_I2C      I2C_NUM_1
-#endif // CONFIG_M5STICKC_PLUS_I2C_NUM
 
 #define AXP192_I2C_ADDR             0x68
 #define AXP192_REG_POWER_OUTPUT     0x12
